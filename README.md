@@ -1,7 +1,7 @@
 # Prodigy InfoTech Cyber Security Internship Projects
 
 <div align="center">
-  <img src="https://github.com/kalmux1/Prodigy-InfoTech/blob/main/Utilities/logo.png" alt="Gif" />
+  <img src="https://github.com/kalmux1/Prodigy-InfoTech/blob/main/Utilities/Prodigy-InfoTech.svg" alt="Gif" width="300px" height="200px" />
 </div>
 <br>
 
