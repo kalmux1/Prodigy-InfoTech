@@ -1,7 +1,7 @@
 # Prodigy InfoTech Cyber Security Internship Projects
 
 <div align="center">
-  <img src="https://github.com/kalmux1/Prodigy-InfoTech/blob/main/Utilities/logo.png" alt="Gif" width="400" height="200"/>
+  <img src="https://github.com/kalmux1/Prodigy-InfoTech/blob/main/Utilities/logo.png" alt="Gif" />
 </div>
 <br>
 
@@ -13,7 +13,7 @@ Welcome to my GitHub repository! I am a Cybersecurity intern at Prodigy InfoTech
 
     git clone https://github.com/kalmux1/Prodigy-InfoTech.git
 
-### Traverse Into The ShadowFox Directory
+### Traverse Into The Prodigy-InfoTech Directory
 
     cd Prodigy-InfoTech
 
