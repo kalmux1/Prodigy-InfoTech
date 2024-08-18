@@ -25,8 +25,21 @@ def encryption():
     ctext_value.insert("1.0", cipher_text)
 
 
-def decryption(cipher_text,key):
-    pass
+def decryption():
+    
+    key = int(key_value.get())
+    cipher_text = ctext_value.get("1.0", "end-1c").lower()
+    plain_text = ""
+    for char in cipher_text:
+        if char in alphabets:
+            position = alphabets.index(char)
+            new_position = (position - key) % 26
+            plain_text += alphabets[new_position]
+        else:
+            plain_text += char 
+    
+    ptext_value.delete("1.0", "end-1c")
+    ptext_value.insert("1.0", plain_text)
 
 
 base = Tk()
@@ -81,7 +94,7 @@ ctext_value.grid(row=0,column=1,padx=5)
 encrypt_button = Button(option_frame,text="Encrypt",command=encryption,font=("Times New Roman", 12),padx=50)
 encrypt_button.grid(row=0,column=0,padx=30)
 
-decrypt_button = Button(option_frame,text="Decrypt",command=decryption(cipher_text = ctext_value,key = key_value),font=("Times New Roman", 12),padx=50)
+decrypt_button = Button(option_frame,text="Decrypt",command=decryption,font=("Times New Roman", 12),padx=50)
 decrypt_button.grid(row=0,column=7,padx=30)
 
 foot_lable = Label(base,text="Created By Kalmux",font=("Courier", 10))
