@@ -1,5 +1,5 @@
 
-# This Python program encrypts and decrypts plaintext.
+# This Python program encrypts and decrypts plaintext by Kalmux.
 
 from tkinter import *
 
