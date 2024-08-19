@@ -20,23 +20,39 @@ def filepath():
             path_value.set(file_path)
 
         except Exception as e:
-            print(f"An error occurred: {e}")
+            image_display.config(text="Cannot Display Image \n(Possibly Encrypted)", image=None)
+            image_display.image = None
+            path_value.set(file_path)
 
 
 def encryption():
-    if path_value is not None:
+    if path_value.get() and key_value.get():
         file_name = path_value.get()
         key = key_value.get()
-        file = open(file_name,'rb')
-        img = file.read()
-        file.close()
 
-        img = bytearray(img)
-        for index,values in enumerate(img):
-            img[index]=values^key
-        file2 = open(file_name,'wb')
-        file2.write(img)
-        file2.close()
+        try:
+            # Read the image file
+            with open(file_name, 'rb') as file:
+                img = file.read()
+
+            # Encrypt the image data
+            img = bytearray(img)
+            for index, value in enumerate(img):
+                img[index] = value ^ key
+
+            # Write the encrypted data back to the file
+            with open(file_name, 'wb') as file:
+                file.write(img)
+
+            # Clear the image display
+            image_display.config(image=None, text="Encrypted Image")
+
+            foot_lable.config(text="Encryption Done")
+
+        except Exception as e:
+            image_display.config(text="Cannot Display Encrypted Image", image=None)
+            foot_lable.config(text="Encryption Failed")
+
        
 
 def decryption():
@@ -53,12 +69,25 @@ def decryption():
         file2 = open(file_name,'wb')
         file2.write(img)
         file2.close()
+
+        try:
+            image = Image.open(file_name)
+            image.thumbnail((200, 200), Image.Resampling.LANCZOS)
+            photo = ImageTk.PhotoImage(image)
+            image_display.config(image=photo, text="")
+            image_display.image = photo
+            foot_lable.config(text="Decryption Done")
+        except Exception as e:
+            image_display.config(text="Cannot Display Image", image=None)
+            image_display.image = None
+            foot_lable.config(text="Decryption Failed")
+       
         
 
 
 base = Tk()
 
-base.geometry("600x400")
+base.geometry("600x440")
 base.title("ImgCrypt")
 base.config(bg="black")
 
@@ -67,6 +96,12 @@ head_frame.pack(pady=10)
 
 head_lable = Label(head_frame,text="Welcome to ImgCrypt",font=("Times New Roman", 30 ,"bold"),bg="black",fg="white")
 head_lable.pack()
+
+subhead_frame = Frame(base)
+subhead_frame.pack()
+
+subhead_lable = Label(subhead_frame,text="Author : Kalmux ",font=("Times New Roman", 15 ,"bold"),bg="black",fg="white")
+subhead_lable.pack()
 
 
 file_frame = Frame(base,bg="black")
@@ -105,14 +140,25 @@ encrypt_button.grid(row=0,column=4,padx=10)
 decrypt_button = Button(key_frame,text="Decrypt",command=decryption,font=("Times New Roman", 11),width=15)
 decrypt_button.grid(row=0,column=5,padx=5)
 
+space_frame = Frame(base)
+space_frame.pack()
+
+space_lable = Label(space_frame,text="",font=("", 5 ,"bold"),bg="black",fg="white",)
+space_lable.pack()
 
 image_frame = Frame(base,borderwidth=3,relief=SUNKEN,height=200,width=200)
-image_frame.pack(side=TOP,anchor="center",expand=False,pady=15)
+image_frame.pack(side=TOP,anchor="center",expand=False,pady=10)
 
 image_display = Label(image_frame,height=200,width=200,text="No Image Selected")
 image_display.pack(expand=True)
 
 image_frame.pack_propagate(False)
+
+foot_frame = Frame(base)
+foot_frame.pack()
+
+foot_lable = Label(foot_frame,text="",font=("Times New Roman", 15 ,"bold"),bg="black",fg="lightgreen")
+foot_lable.pack(side=TOP,anchor="center")
 
 
 base.mainloop()
