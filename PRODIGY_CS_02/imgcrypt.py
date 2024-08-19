@@ -45,43 +45,50 @@ def encryption():
                 file.write(img)
 
             # Clear the image display
-            image_display.config(image=None, text="Encrypted Image")
+            image_display.config(image=None, text="Encrypted Image",fg="lightgreen")
+            image_display.image = None
 
-            foot_lable.config(text="Encryption Done")
+            foot_lable.config(text="Encryption Done",fg="lightgren")
 
         except Exception as e:
-            image_display.config(text="Cannot Display Encrypted Image", image=None)
-            foot_lable.config(text="Encryption Failed")
+            image_display.config(text="Cannot Display Encrypted Image", image=None,fg="red")
+            image_display.image = None
+            foot_lable.config(text="Encryption Failed",fg="red")
 
        
 
 def decryption():
-    if path_value is not None:
+    if path_value.get() and key_value.get():
         file_name = path_value.get()
         key = key_value.get()
-        file = open(file_name,'rb')
-        img = file.read()
-        file.close()
-
-        img = bytearray(img)
-        for index,values in enumerate(img):
-            img[index]=values^key
-        file2 = open(file_name,'wb')
-        file2.write(img)
-        file2.close()
 
         try:
+            # Read the encrypted image file
+            with open(file_name, 'rb') as file:
+                img = file.read()
+
+            # Decrypt the image data
+            img = bytearray(img)
+            for index, value in enumerate(img):
+                img[index] = value ^ key
+
+            # Write the decrypted data back to the file
+            with open(file_name, 'wb') as file:
+                file.write(img)
+
+            # Reload and display the decrypted image
             image = Image.open(file_name)
             image.thumbnail((200, 200), Image.Resampling.LANCZOS)
             photo = ImageTk.PhotoImage(image)
             image_display.config(image=photo, text="")
             image_display.image = photo
-            foot_lable.config(text="Decryption Done")
+
+            foot_lable.config(text="Decryption Done", fg="lightgreen")
+
         except Exception as e:
-            image_display.config(text="Cannot Display Image", image=None)
+            image_display.config(image=None, text="Cannot Display Image", fg="red")
             image_display.image = None
-            foot_lable.config(text="Decryption Failed")
-       
+            foot_lable.config(text="Decryption Failed", fg="red")
         
 
 
