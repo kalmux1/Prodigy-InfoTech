@@ -13,7 +13,6 @@ def passleak(password):
         passwords = f.read().splitlines()
 
     if password in passwords:
-        print("Password found in data leak.")
         return True
     leakscore += 1
     return False
@@ -63,7 +62,7 @@ def repetition(password):
     match = re.search(pattern, password)
     
     if match:
-        status_lable.config(text=f"Consecutive character repetition found: {match.group()}")
+        status_lable.config(text=f"Consecutive character repetition found: {match.group()}",fg="red")
         return 0
     return 1 
     
@@ -73,10 +72,10 @@ def repetition(password):
 def main():
     password = passwordvar.get()
     if password == "" :
-        status_lable.config(text="No Password Entered")
+        status_lable.config(text="No Password Entered",fg="red")
         return
     if lengthcheck(password) == 0:
-        status_lable.config(text="Password Length is too short !")
+        status_lable.config(text="Password Length is too short !",fg="red")
         return
     if  repetition(password) == 0:
         return
@@ -85,37 +84,40 @@ def main():
         char_score = charcheck(password)
         repetition_score = repetition(password)
         total_score = length_score + char_score + leakscore + repetition_score
-        print(f"Password strength score: {total_score}")
+        
 
         if total_score <= 3:
-            status_lable.config(text="Very Weak")
+            status_lable.config(text="Very Weak",fg="red")
         elif total_score > 3 and total_score <= 5:
-            status_lable.config(text="Weak")
+            status_lable.config(text="Weak",fg="orange")
         elif total_score > 5 and total_score <= 7:
-            status_lable.config(text="Moderate")
+            status_lable.config(text="Moderate",fg="yellow")
         elif total_score > 7:
-            status_lable.config(text="Strong")
+            status_lable.config(text="Strong",fg="green")
     else:
-        status_lable.config(text="Password found in data leak")
+        status_lable.config(text="Password found in data leak !",fg="red")
         
 
 
 base = Tk()
 base.geometry("450x250")
+base.maxsize(width=450,height=250)
+base.minsize(width=450,height=250)
 base.title("Passify")
+base.config(bg="#1C1C1C")
 
-head_frame = Frame(base)
+head_frame = Frame(base,bg="#1C1C1C")
 head_frame.pack(side=TOP,anchor="center",pady=10)
 
-head_lable = Label(head_frame,text="Welcome To Passify",font=("Times New Roman", 20, "bold"))
+head_lable = Label(head_frame,text="Welcome To Passify",font=("Times New Roman", 20, "bold"),bg="#1C1C1C",fg="cyan")
 head_lable.grid(row=0,column=0)
-head_title = Label(head_frame,text="Password Strength Checker",font=("Times New Roman", 10, "bold"))
+head_title = Label(head_frame,text="Password Strength Checker",font=("Times New Roman", 10, "bold"),bg="#1C1C1C",fg="cyan")
 head_title.grid(row=1,column=0)
 
-pass_frame = Frame(base)
+pass_frame = Frame(base,bg="#1C1C1C")
 pass_frame.pack(side=TOP,anchor="nw",padx=25,pady=10)
 
-pass_lable = Label(pass_frame,text="Password:",font=("Times New Roman", 12))
+pass_lable = Label(pass_frame,text="Password:",font=("Times New Roman", 12),bg="#1C1C1C",fg="#F0F0F0")
 pass_lable.grid(row=0,column=0)
 
 passwordvar = StringVar()
@@ -127,13 +129,13 @@ password_entry.grid(row=0,column=1,padx=3)
 check_frame = Frame(base)
 check_frame.pack(side=TOP,anchor="center",pady=10)
 
-check_button = Button(check_frame,text="Check",font=("Times New Roman", 12, "bold"),command=main,padx=10)
+check_button = Button(check_frame,text="Check",font=("Times New Roman", 12, "bold"),command=main,padx=10,bg="#2980B9",fg="#1C1C1C")
 check_button.pack()
 
-status_frame = Frame(base)
+status_frame = Frame(base,bg="#1C1C1C")
 status_frame.pack(side=TOP,anchor="center",pady=10)
 
-status_lable = Label(status_frame,text="",font=("Times New Roman", 15, "bold"))
+status_lable = Label(status_frame,text="",font=("Times New Roman", 15, "bold"),bg="#1C1C1C")
 status_lable.pack()
 
 base.mainloop()
