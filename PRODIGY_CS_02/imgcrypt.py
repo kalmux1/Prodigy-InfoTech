@@ -48,7 +48,7 @@ def encryption():
             image_display.config(image=None, text="Encrypted Image",fg="lightgreen")
             image_display.image = None
 
-            foot_lable.config(text="Encryption Done",fg="lightgren")
+            foot_lable.config(text="Encryption Done",fg="lightgreen")
 
         except Exception as e:
             image_display.config(text="Cannot Display Encrypted Image", image=None,fg="red")
