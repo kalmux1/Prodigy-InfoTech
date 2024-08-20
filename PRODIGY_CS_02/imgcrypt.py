@@ -44,11 +44,7 @@ def encryption():
             with open(file_name, 'wb') as file:
                 file.write(img)
 
-            # Clear the image display
-            image_display.config(image=None, text="Encrypted Image",fg="lightgreen")
-            image_display.image = None
-
-            foot_lable.config(text="Encryption Done",fg="lightgreen")
+            foot_lable.config(text=f"Encryption Done \n Encryted image save to {path_value.get()}",fg="lightgreen")
 
         except Exception as e:
             image_display.config(text="Cannot Display Encrypted Image", image=None,fg="red")
@@ -83,7 +79,7 @@ def decryption():
             image_display.config(image=photo, text="")
             image_display.image = photo
 
-            foot_lable.config(text="Decryption Done", fg="lightgreen")
+            foot_lable.config(text=f"Decryption Done \n Decryted image save to {path_value.get()}", fg="lightgreen")
 
         except Exception as e:
             image_display.config(image=None, text="Cannot Display Image", fg="red")
@@ -94,7 +90,7 @@ def decryption():
 
 base = Tk()
 
-base.geometry("600x440")
+base.geometry("600x460")
 base.title("ImgCrypt")
 base.config(bg="black")
 
