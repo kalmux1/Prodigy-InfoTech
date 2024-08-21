@@ -1,5 +1,5 @@
 
-# By Kalmux
+# Keylogger By Kalmux
 
 from pynput import keyboard
 from datetime import datetime
