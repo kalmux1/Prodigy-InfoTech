@@ -1,3 +1,5 @@
+#Network Packet Analyzer by Kalmux
+
 from scapy.all import sniff
 from scapy.layers.inet import IP
 from scapy.packet import Raw
